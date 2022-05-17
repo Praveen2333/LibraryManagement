@@ -91,22 +91,34 @@ public class EmployeePresentationImpl implements EmployeePresentation {
 			System.out.println("Enter the Employee Id");
 			int empid = Integer.parseInt(scanner.nextLine());
 			employeeService.isBookPresent(bookName);
-			int available = employeeService.inStock(bookName);
-			if (available > 0) {
-				System.out.println("Your Book is Available");
-				System.out.println("Do you wish to take the book(Yes/No)");
-				String choose = scanner.nextLine();
-				if (choose.equalsIgnoreCase("Yes")) {
-					employeeService.findBookByName(bookName, empid);
-					if (available > 1) {
-						employeeService.updateStock(bookName);
+			if(employeeService.BooksLimit()) {
+			if(employeeService.BookExisted(bookName, empid)) {
+				int available = employeeService.inStock(bookName);
+				if (available > 0) {
+					System.out.println("Your Book is Available");
+					System.out.println("Do you wish to take the book(Yes/No)");
+					String choose = scanner.nextLine();
+					if (choose.equalsIgnoreCase("Yes")) {
+						employeeService.findBookByName(bookName, empid);
+						if (available > 0) {
+							employeeService.updateStock(bookName);
+						}
+					} 
+					else {
+						System.out.println("Thank you");
 					}
-				} else {
-					System.out.println("Thank you");
-				}
 
-			} else {
-				System.out.println("Your Book is not available, Sorry!");
+				} else {
+					System.out.println("Your Book is out of Stock, Sorry!");
+				}
+				}
+			else {
+				System.out.println("Book Already Existed");
+			}
+			
+			}
+			else {
+				System.out.println("Books Limit Reached");
 			}
 			break;
 			

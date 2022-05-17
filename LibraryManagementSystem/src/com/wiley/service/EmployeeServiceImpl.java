@@ -60,5 +60,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 
+	@Override
+	public boolean BookExisted(String BookName, int EmpId) {
+		return employeeDao.BookExisted(BookName, EmpId);
+		
+		
+	}
+
+	@Override
+	public boolean BooksLimit() {
+		return employeeDao.BooksLimit();
+		
+	}
+
 
 }

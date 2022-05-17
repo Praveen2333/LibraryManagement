@@ -18,6 +18,8 @@ public interface EmployeeDao {
 	public void isBookPresent(String bookName);
 
 	public void deleteBook(int eid, int bid);
+
+	public boolean BookExisted(String BookName,int EmpId);
 	
-	
+	public boolean BooksLimit();
 }

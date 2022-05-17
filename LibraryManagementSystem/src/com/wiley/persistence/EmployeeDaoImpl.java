@@ -178,7 +178,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			preparedStatement.setString(1, bookName);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				available = resultSet.getInt("latefee");
+				available = resultSet.getInt("stock");
 			}
 			if (available > 0) {
 				return available;
@@ -348,5 +348,70 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public boolean BookExisted(String BookName, int EmpId) {
+		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement1 = null;
+		try {
+
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3000/Library", "root",
+					"wiley");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			preparedStatement = connection.prepareStatement("select * from book where booktitle=?");
+			preparedStatement.setString(1, BookName);
+			preparedStatement1 = connection.prepareStatement("select * from issued where empId=?");
+			preparedStatement1.setInt(1, EmpId);
+			int k=0,l=0,In=0;
+			ResultSet resultSet = preparedStatement.executeQuery();
+			ResultSet resultSet1 = preparedStatement1.executeQuery();
+			if (resultSet.next()) {
+				k = resultSet.getInt("BookId");
+			}
+			while (resultSet1.next()) {
+				if (resultSet1.getInt("BookId")==k)
+					In=1;
+			}
+			if (In==1)
+				return false;
+			return true;
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+
+	}
+
+	@Override
+	public boolean BooksLimit() {
+		PreparedStatement preparedStatement = null;
+		
+		try {
+
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3000/Library", "root",
+					"wiley");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			int k=0;
+			preparedStatement = connection.prepareStatement("select * from employee ");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				if (resultSet.getInt("BooksBorrowed")<3)
+					k=1;
+			}
+			if (k==1)
+				return true;
+			return false;
+				
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
