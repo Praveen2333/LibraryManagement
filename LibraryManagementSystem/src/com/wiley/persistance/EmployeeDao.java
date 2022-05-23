@@ -1,6 +1,6 @@
-package com.wiley.service;
+package com.wiley.persistance;
 
-public interface EmployeeService {
+public interface EmployeeDao {
 
 	public void insertBook(String bookTitle, int bookId, String bookType, int lateFee, int Stock);
 
@@ -19,6 +19,6 @@ public interface EmployeeService {
 	public boolean BookExisted(String BookName,int EmpId);
 	
 	public boolean BooksLimit(int EmpId);
-
+	
 	public void showbookstaken(int EmpId);
 }

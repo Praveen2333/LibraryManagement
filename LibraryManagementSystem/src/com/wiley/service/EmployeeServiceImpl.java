@@ -1,27 +1,15 @@
 package com.wiley.service;
 
-import com.wiley.persistence.EmployeeDao;
-import com.wiley.persistence.EmployeeDaoImpl;
+import com.wiley.persistance.EmployeeDao;
+import com.wiley.persistance.EmployeeDaoImpl;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
 	EmployeeDao employeeDao = new EmployeeDaoImpl();
 
 	@Override
-	public int employeeLogin(int empId, String empPwd) {
-		int result = employeeDao.employeeLogin(empId, empPwd);
-		return result;
-	}
-
-	@Override
 	public void insertBook(String bookTitle, int bookId, String bookType, int lateFee, int stock) {
 		employeeDao.insertBook(bookTitle, bookId, bookType, lateFee, stock);
-
-	}
-
-	@Override
-	public void insertEmployee(String empName, int empId, int booksBorrowed, int cardNo, String password) {
-		employeeDao.insertEmployee(empName, empId, booksBorrowed, cardNo, password);
 
 	}
 
@@ -68,8 +56,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public boolean BooksLimit() {
-		return employeeDao.BooksLimit();
+	public boolean BooksLimit(int EmpId) {
+		return employeeDao.BooksLimit(EmpId);
+	}
+
+	@Override
+	public void showbookstaken(int EmpId) {
+		employeeDao.showbookstaken( EmpId);
 		
 	}
 
